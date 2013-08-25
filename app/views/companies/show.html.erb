@@ -1,0 +1,71 @@
+<% provide(:title, @company.name) %>
+
+<div class="row">
+	<div class="row">
+		<h2><%= @company.name %></h2>
+			<ul class="breadcrumbs">
+			  <li><%= link_to "seznam společností", companies_path %></li>
+			  <li><%= link_to "seznam zaměstnanců", employees_path %></li>
+			</ul>
+	</div>	
+	<div class="large-8 columns">	
+		<div class="panel">
+			<h4>IČ: <%= @company.ico %></h4>
+				<% if @company.dic? %>
+					<h4>DIČ: CZ<%= @company.dic %></h4>
+				<% end %>	
+			<h4>Telefon: +420<%= @company.phone %></h4>
+			<h4>Web: <%= link_to @company.web, "http://www.#{@company.web}"  %></h4>
+			<h4>Email: <%= mail_to @company.email, @company.email %></h4>
+			<h4>Adresa: <%= @company.address %></h4>
+		</div>
+	</div>
+</div>	
+	<div class="row">
+		<div class="large-12 columns">
+		  <span class= "alert-link-position" ><%= link_to "přídat nového zaměstnance", new_company_employee_path(@company) %></span> | 
+		  <span class= "alert-link-position" ><%= link_to "přídat novou pozici", new_company_position_path(@company) %></span> | 
+		  <%= link_to "upravit společnost", edit_company_path(@company)  %> | 
+		  <%= link_to "smazat společnost", company_path(@company), 
+											method: :delete, data: { confirm: "Opravdu chcete smazat společnost #{@company.name}?" } %>
+		</div>									
+	</div>										
+<p></p>
+<div class="row">
+	<div class="row">
+		<% if @company.employees.blank? %>
+			<h5>společnost zatím nemá zaměstnance, ale můžete
+			<%= link_to "přídat nového", new_company_employee_path(@company) %></h5> 
+		<% else %>	
+		<table>
+			<tr>
+				<th>Jméno</th>
+				<th>Příjmení</th>
+				<th>Adresa</th>
+				<th>Telefon</th>
+				<th>Email</th>
+				<th>Pozice</th>
+				<th>Datum narození</th>
+				<th></th>
+				<th></th>
+				<th></th>
+			</tr>
+		<% @company.employees.each do |employee| %>
+			<tr>
+				<td><%= employee.name %></td>
+				<td><%= employee.surname %></td>
+				<td><%= employee.address %></td>
+				<td>+420<%= employee.phone %></td>
+				<td><%= employee.email %></td>
+				<td><%= employee.position %></td>
+				<td><%= employee.birthday.strftime("%m.%d.%Y") %></td>
+				<td><%= link_to "profil", company_employee_path(@company, employee) %></td>
+				<td><%= link_to "smazat", company_employee_path(@company, employee), 
+										method: :delete, data: { confirm: "Opravdu chcete smazat společnost #{employee.name}?" } %></td>
+				<td><%= link_to "upravit", edit_company_employee_path(@company, employee) %></td>
+			</tr>
+		<% end %>
+		</table>
+		<% end %>	
+	</div>
+</div>

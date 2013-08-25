@@ -1,0 +1,56 @@
+<% provide(:title, "Všichni zaměstnanci") %>
+
+<div class="row">
+	<h2>Seznam zaměstnanců</h2>
+	<p>
+		<%= link_to "zpět na seznam společnosti", root_url %> | export to: <%= link_to "CSV", employees_path(format: "csv") %>
+	</p>
+	<div class="row">
+		<div class="large-8 columns">
+			<div class="row collapse">
+				<h3 class="subheader">Vyhledat zaměstnance dle jména</h3>
+				<div class="small-9 columns">
+					<%= form_tag employees_path, :method => 'get' do %>
+	  			<%= text_field_tag :search, params[:search] %>
+	  		</div>
+	  		<div class="small-3 columns">	
+	  			<%= submit_tag "Search", :name => nil, :class=>"button prefix" %>
+				</div>
+				<% end %>
+			</div>	
+		</div>
+	</div>
+	<div class="row">
+		<div class="large-12 columns">
+			<table>
+				<tr>
+					<th>Název společnosti</th>
+					<th>Jméno </th>
+					<th>Příjmení</th>
+					<th>Telefon</th>
+					<th>Email</th>
+					<th>Adresa</th>
+					<th>Pozice</th>
+					<th></th>
+					<th></th>
+					<th></th>
+				</tr>
+			<% @employees.each do |employee| %>
+				<tr>
+					<td><%= employee.company.name %></td>
+					<td><%= employee.name %></td>
+					<td><%= employee.surname %></td>
+					<td>+420<%= employee.phone %></td>
+					<td><%= employee.email %></td>
+					<td><%= employee.address %></td>
+					<td><%= employee.position %></td>
+					<td><%= link_to "Profil", company_employee_path(employee.company, employee) %></td>
+					<td><%= link_to "Smazat", company_employee_path(employee.company, employee), 
+									method: :delete, data: { confirm: "Opravdu chcete smazat zaměstnance #{employee.name}?" } %></td>
+					<td><%= link_to "Upravit", edit_company_employee_path(employee.company, employee) %></td>
+				</tr>			
+			<% end %>
+			</table>
+		</div>
+	</div>	
+</div>

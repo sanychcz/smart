@@ -1,0 +1,18 @@
+<div class="row">
+	<div class="large-6 columns">
+		<h2>Nová pozice</h2>
+		<%= form_for [@company, @position] do |f| %>	
+		<%= render 'shared/error_message', object: f.object   %>
+
+		<p><%= f.label :name, "Název pozice" %>
+		<%= f.text_field :name %></p>
+
+		<p><%= f.submit "Uložit pozici", :class => "button secondary" %></p>
+	<% end %>
+	</div>
+</div>
+<div class="row">
+	<div class="large-6 columns">
+		<%= link_to "zpět na profil společnosti", @company %>	
+	</div>
+</div>

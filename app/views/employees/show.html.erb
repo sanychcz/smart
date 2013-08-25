@@ -1,0 +1,19 @@
+<% provide(:title, @employee.name) %>
+
+<div class="row">
+	<h1>Profil zaměstance</h1>
+	<div class="large-9 columns panel">
+		<h4><small>Jméno a příjmení:</small> <%= @employee.name %> <%= @employee.surname %></h4>
+		<h4><small>Pozice:</small> <%= @employee.position %></h4>
+		<h4><small>Telefon:</small>+420<%= @employee.phone %></h4>
+		<h4><small>Email:</small> <%= mail_to @employee.email %></h4>
+		<h4><small>Datum narození:</small> <%= @employee.birthday.strftime("%m.%d.%Y") %></h4>
+		<h4><small>Název společnosti:</small> <%= link_to @employee.company.name, @employee.company %></h4>
+		<h4><small>Adresa:</small> <%= @employee.address %></h4>
+	</div>
+</div>
+
+<div class="row">
+	<%= link_to "zpět na profil společnosti", @employee.company %> | <%= link_to "upravit údaje", edit_company_employee_path(@employee.company, @employee) %> | <%= link_to "smazat", company_employee_path(@employee.company, @employee), 
+										method: :delete, data: { confirm: "Opravdu chcete smazat společnost #{@employee.name}?" } %>
+</div>

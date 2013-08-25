@@ -1,0 +1,61 @@
+<% provide(:title, "Všechny společnosti") %>
+
+<div class="row">
+	<h2>Seznam společností</h2>
+		<div class="row">
+			<div class="large-8 columns">
+				<div class="row collapse">
+					<h3 class="subheader">Vyhledat společnost dle názvu</h3>
+					<div class="small-9 columns">
+						<%= form_tag companies_path, :method => 'get' do %>
+			  		<%= text_field_tag :search, params[:search] %>
+			  	</div>
+			  	<div class="small-3 columns">	
+			  		<%= submit_tag "Search", :name => nil, :class=>"button prefix" %>
+					</div>
+					<% end %>
+				</div>	
+			</div>
+		</div>	
+	<div class="row">	
+		<div class="large-12 columns">	
+			<p>
+			 	<span class= "alert-link-position" ><%= link_to "přidat novou společnost", new_company_path %></span> | <%= link_to "seznam všech zaměstnanců", employees_path  %> | 
+			 															export to: <%= link_to "CSV", companies_path(format: "csv") %>
+			</p>
+			<table>
+				<thead>
+					<tr>
+						<th>Název</th>
+						<th>IČ</th>
+						<th>DIČ</th>
+						<th>Adresa</th>
+						<th>Telefon</th>
+						<th>Email</th>
+						<th>Web</th>
+						<th></th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+				<% @companies.each do |company| %>
+					<tr>
+						<td><%= company.name %></td>
+						<td><%= company.ico %></td>
+						<td>CZ<%= company.dic %></td>
+						<td><%= company.address %></td>
+						<td>+420<%= company.phone %></td>
+						<td><%= mail_to company.email %></td>
+						<td><%= link_to company.web, "http://www.#{company.web}" %></td>
+						<td><span class= "alert-link-position" ><%= link_to "Profil", company_path(company) %></span></td>
+						<td><span class= "alert-link-position" ><%= link_to "Smazat", company_path(company), 
+										method: :delete, data: { confirm: "Opravdu chcete smazat společnost #{company.name}?" } %></span></td>
+						<td><span class= "alert-link-position" ><%= link_to "Upravit", edit_company_path(company) %></span></td>
+					</tr>
+				<% end %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
