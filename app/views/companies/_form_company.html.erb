@@ -1,28 +1,26 @@
 <div class="row">
-	<div class="row">
-		<div class="large-6 columns">	
-		</div>
-	</div>	
+	
 	<div class="large-6 columns">
+		<h5 class="subheader">Polička s * jsou povinná</h5>
 		<%= form_for @company do |f| %>
 		<%= render 'shared/error_message', object: f.object   %>
 
-		<p><%= f.label :name, "Název" %>
+		<p><%= f.label :name, "*Název" %>
 		<%= f.text_field :name %></p>
 	
-		<p><%= f.label :ico, "IČO" %>
+		<p><%= f.label :ico, "*IČO" %>
 		<%= f.text_field :ico %></p>
 
-		<p><%= f.label :dic, "DIČ" %>
+		<p><%= f.label :dic, "*DIČ" %>
 		<%= f.text_field :dic %></p>
 
 		<p><%= f.label :address, "Adresa" %>
 		<%= f.text_field :address %></p>
 
-		<p><%= f.label :phone, "Telefon" %>
+		<p><%= f.label :phone, "*Telefon" %>
 		<%= f.telephone_field :phone %></p>
 
-		<p><%= f.label :email, "Email" %>
+		<p><%= f.label :email, "*Email" %>
 		<%= f.text_field :email %></p>
 
 		<p><%= f.label :web, "Web" %>
